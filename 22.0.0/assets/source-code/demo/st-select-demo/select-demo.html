@@ -1,0 +1,107 @@
+<!--
+
+    © 2017 Stratio Big Data Inc., Sucursal en España.
+
+    This software is licensed under the Apache License, Version 2.0.
+    This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    See the terms of the License for more details.
+
+    SPDX-License-Identifier: Apache-2.0.
+
+-->
+<st-docs [htmlFile]="configDoc.html" [tsFile]="configDoc.ts" [componentFile]="configDoc.component">
+   <section class="container-liquid demo-layout">
+      <h1 class="title">Theme customization</h1>
+      <p class="paragraph">You can customize some styles using the following css variables</p>
+      <demo-css-property-table [cssProperties]="cssProperties"></demo-css-property-table>
+
+      <h1 class="title">Examples</h1>
+
+      <h2 class="subtitle">Basic select without form with keyboard listener to move between options</h2>
+
+      <st-select placeholder="Select option" [options]="options" [disabled]="disabled" [keyBoardMove]="true"
+                 [default]="options[2].value">
+      </st-select>
+
+      <button class="button button-primary" (click)="changeOptions()">Change options</button>
+
+      <h2 class="subtitle">Template Driven Example</h2>
+
+      <form #templateDrivenForm="ngForm" novalidate autocomplete="off" class="col-md-3">
+         <div class="form-group">
+
+            <st-select stCheckValidations errorMessage="This field is required" label="Option 1"
+                       [forceValidations]="true" [formControl]="formControl" tooltip="This field is required"
+                       placeholder="Select option" [options]="options" name="option1" required id="test"
+                       (select)="onSelect($event)" class="st-form-field">
+            </st-select>
+            <br>
+
+            Disabled select
+
+            <st-select stCheckValidations label="Option 1" tooltip="Disabled field" placeholder="Select option"
+                       [options]="options" [(ngModel)]="model.option1"
+                       name="option1" required [disabled]="true" id="disabled-test" (select)="onSelect($event)"
+                       class="st-form-field">
+            </st-select>
+
+            <button class="button button-primary"><span>Submit</span></button>
+
+            <br>
+
+            <p>Form value: {{ templateDrivenForm.value | json }}</p>
+            <p>Form status: {{ templateDrivenForm.disabled ? 'DISABLED' : templateDrivenForm.valid ? 'VALID' : 'INVALID'
+               }}</p>
+         </div>
+      </form>
+
+      <h2 class="subtitle">Model Driven / Reactive Example</h2>
+
+      <form [formGroup]="reactiveForm" novalidate autocomplete="off" class="col-md-3">
+         <div class="form-group">
+
+            <st-select stCheckValidations formControlName="option1" placeholder="Select option" [options]="options"
+                       class="st-form-field">
+            </st-select>
+         </div>
+
+         <br>
+         <button class="button button-primary"><span>Submit</span></button>
+         <br>
+
+         <p>Form value: {{ reactiveForm.value | json }}</p>
+         <p>Form status: {{ reactiveForm.status | json }}</p>
+      </form>
+
+      <h2 class="subtitle">Template Driven Example</h2>
+
+      <button class="button button-primary" (click)="changeDisabled()">Change disable</button>
+
+      <h2 class="subtitle">Search Option Example</h2>
+
+      <st-select [enabledSearcher]="true"
+                 placeholder="Select option"
+                 placeholderSearch="Search..."
+                 [options]="filteredOptions"
+                 [disabled]="disabled"
+                 (search)="onSearch($event)">
+      </st-select>
+
+      <h2 class="subtitle">Scroll with spinner option</h2>
+
+      <st-select [enabledSearcher]="true" placeholder="Select option" placeholderSearch="Search..." [options]="filteredOptions"
+                 [disabled]="disabled" [isLoading]="isLoading" (scrollAtBottom)="onScrollAtBottom()" (search)="onSearch($event)">
+      </st-select>
+
+      <h2 class="subtitle">Without form</h2>
+
+      <st-select class="st-pagination__selector"
+         [options]="options"
+         label="Select option"
+         [selected]="options[1]"
+         [attr.id]="selectId"
+         (select)="onChangePerPage($event)">
+      </st-select>
+   </section>
+</st-docs>
